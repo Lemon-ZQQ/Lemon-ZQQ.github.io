@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="最美的不是下雨天，是曾和你一起躲过雨的屋檐" type="application/atom+xml" />
 
@@ -81,13 +83,17 @@
 
 
 
-<meta property="og:type" content="website">
+<meta name="description" content="#　hadoop完全分布式客户端基本操作 基本要点 1. hadoop的rpc机制　Remote Procedure Call 远程过程调用2. Vmware虚拟机克隆复制3. Ubuntu启用ssh服务 apt-get install openssh-server/client4. ssh免密操作 (PermitRootLogin yes 修改后要重启ssh才生效)5. /ect/hosts 主">
+<meta property="og:type" content="article">
 <meta property="og:title" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
-<meta property="og:url" content="https://lemon-zqq.github.io/index.html">
+<meta property="og:url" content="https://lemon-zqq.github.io/2018/10/12/hadoop完全分布式搭建和客户端基本操作/index.html">
 <meta property="og:site_name" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
+<meta property="og:description" content="#　hadoop完全分布式客户端基本操作 基本要点 1. hadoop的rpc机制　Remote Procedure Call 远程过程调用2. Vmware虚拟机克隆复制3. Ubuntu启用ssh服务 apt-get install openssh-server/client4. ssh免密操作 (PermitRootLogin yes 修改后要重启ssh才生效)5. /ect/hosts 主">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-12T07:26:30.171Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
+<meta name="twitter:description" content="#　hadoop完全分布式客户端基本操作 基本要点 1. hadoop的rpc机制　Remote Procedure Call 远程过程调用2. Vmware虚拟机克隆复制3. Ubuntu启用ssh服务 apt-get install openssh-server/client4. ssh免密操作 (PermitRootLogin yes 修改后要重启ssh才生效)5. /ect/hosts 主">
 
 
 
@@ -117,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://lemon-zqq.github.io/"/>
+  <link rel="canonical" href="https://lemon-zqq.github.io/2018/10/12/hadoop完全分布式搭建和客户端基本操作/"/>
 
 
 
 
 
-  <title>最美的不是下雨天，是曾和你一起躲过雨的屋檐</title>
+  <title> | 最美的不是下雨天，是曾和你一起躲过雨的屋檐</title>
   
 
 
@@ -142,8 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -216,9 +221,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -248,9 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/hadoop完全分布式搭建和客户端基本操作/" itemprop="url">Untitled</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -300,9 +303,7 @@
       
 
       
-        
-          
-            <p>#　hadoop完全分布式客户端基本操作</p>
+        <p>#　hadoop完全分布式客户端基本操作</p>
 <p><strong><em>基本要点</em></strong></p>
 <font color="red"><br><em>1. hadoop的rpc机制　Remote Procedure Call 远程过程调用<br>2. Vmware虚拟机克隆复制<br>3. Ubuntu启用ssh服务 apt-get install openssh-server/client<br>4. ssh免密操作 (PermitRootLogin yes 修改后要重启ssh才生效)<br>5. /ect/hosts 主机DNS解析<br>6. Xshell操控整个集群<br>7. scp文件传输</em><br><br></font>
 
@@ -344,8 +345,6 @@
 <p><strong><em>客户端基本操作代码</em></strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">package com.ucas.wordcount;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.net.URI;</span><br><span class="line">import java.net.URISyntaxException;</span><br><span class="line"></span><br><span class="line">import org.apache.hadoop.conf.Configuration;</span><br><span class="line">import org.apache.hadoop.fs.FileSystem;</span><br><span class="line">import org.apache.hadoop.fs.Path;</span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line">public class HDFSClient &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException &#123;</span><br><span class="line">		</span><br><span class="line">		//获取配置信息</span><br><span class="line">		Configuration conf = new Configuration();</span><br><span class="line">		conf.set(&quot;fs.defaultFS&quot;, &quot;hdfs://master:9000&quot;);</span><br><span class="line">		//获取文件系统</span><br><span class="line">		FileSystem fileSystem = FileSystem.get(conf);</span><br><span class="line">		fileSystem = FileSystem.get(new URI(&quot;hdfs://master:9000&quot;), conf, &quot;root&quot;);</span><br><span class="line">		// 拷贝命令</span><br><span class="line">		fileSystem.copyFromLocalFile(new Path(&quot;/usr/local/hadoop-2.7.6/zqq.c&quot;), new Path(&quot;/demo01/zqq.c&quot;));</span><br><span class="line">		//关闭</span><br><span class="line">		fileSystem.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//获取文件系统</span><br><span class="line">	@Test</span><br><span class="line">	public void getFileSystem() throws IOException, InterruptedException, URISyntaxException &#123;</span><br><span class="line">		//创建配置信息</span><br><span class="line">		Configuration conf = new Configuration();</span><br><span class="line">		//获取文件系统</span><br><span class="line">		FileSystem fileSystem = FileSystem.get(new URI(&quot;hdfs://master:9000&quot;), conf , &quot;root&quot;);</span><br><span class="line">		//打印文件系统</span><br><span class="line">		System.out.println(fileSystem.toString());</span><br><span class="line">		fileSystem.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//上传文件</span><br><span class="line">	@Test</span><br><span class="line">	public void putFileToHDFS() throws IOException, InterruptedException, URISyntaxException &#123;</span><br><span class="line">		//获取文件系统</span><br><span class="line">		Configuration conf =  new Configuration();</span><br><span class="line">		FileSystem fileSystem = FileSystem.get(new URI(&quot;hdfs://master:9000&quot;), conf , &quot;root&quot;);</span><br><span class="line">		//上传</span><br><span class="line">		fileSystem.copyFromLocalFile(true, new Path(&quot;/usr/local/hadoop-2.7.6/Lemon.txt&quot;), new Path(&quot;/demo01/Lemon.txt&quot;));</span><br><span class="line">	    //关闭</span><br><span class="line">		fileSystem.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//下载文件</span><br><span class="line">	@Test</span><br><span class="line">	public void getFileFromHDFS() throws IOException, InterruptedException, URISyntaxException &#123;</span><br><span class="line">		//获取文件系统</span><br><span class="line">		Configuration conf = new Configuration();</span><br><span class="line">		FileSystem fileSystem = FileSystem.get(new URI(&quot;hdfs://master:9000&quot;), conf, &quot;root&quot;);</span><br><span class="line">		//下载</span><br><span class="line">		fileSystem.copyToLocalFile(false,new Path(&quot;/demo01/Lemon.txt&quot;),new Path(&quot;/usr/local/hadoop-2.7.6/Lemon.txt&quot;));</span><br><span class="line">	    fileSystem.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//创建目录</span><br><span class="line">	@Test</span><br><span class="line">	public void mkdirHDFS() throws IOException, InterruptedException, URISyntaxException &#123;</span><br><span class="line">		//获取文件系统</span><br><span class="line">		Configuration conf = new Configuration();</span><br><span class="line">		FileSystem fileSystem = FileSystem.get(new URI(&quot;hdfs://master:9000&quot;), conf, &quot;root&quot;);</span><br><span class="line">		//创建</span><br><span class="line">		fileSystem.mkdirs(new Path(&quot;/demo02/mydir&quot;));</span><br><span class="line">	    fileSystem.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//删除目录</span><br><span class="line">	@Test</span><br><span class="line">	public void deleteHDFS() throws IOException, InterruptedException, URISyntaxException &#123;</span><br><span class="line">		//获取文件系统</span><br><span class="line">		Configuration conf = new Configuration();</span><br><span class="line">		FileSystem fileSystem = FileSystem.get(new URI(&quot;hdfs://master:9000&quot;), conf, &quot;root&quot;);</span><br><span class="line">		//删除</span><br><span class="line">		fileSystem.delete(new Path(&quot;/demo02/mydir&quot;), true);</span><br><span class="line">		fileSystem.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-          
-        
       
     </div>
     
@@ -362,140 +361,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lemon-zqq.github.io/2018/10/11/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="曾庆琦">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/11/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-11T21:29:14-05:00">
-                2018-10-11
-              </time>
+              <a href="/2018/10/11/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -505,129 +392,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lemon-zqq.github.io/2018/10/11/曾庆琦，您好/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="曾庆琦">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/11/曾庆琦，您好/" itemprop="url">曾庆琦，您好</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-11T19:38:56-05:00">
-                2018-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -635,6 +404,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -838,6 +611,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
