@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="最美的不是下雨天，是曾和你一起躲过雨的屋檐" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="基本要点 1.java引用变量有两种类型，一个是编译时类型，一个是运行时类型。编译时类型由申明该变量使用的类型决定，运行时类型由实际赋值给变量的对象决定。如果编译时类型和运行时类型不一致，就可能出现所谓的多态。2.第三个引用变量ploymorphicBc比较特殊，它编译时类型是BaseClass，而运行时类型是SubClass，当调用该引用变量的test()方法时，实际执行的是SubClass类中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java疯狂讲义１">
+<meta property="og:url" content="https://lemon-zqq.github.io/2018/10/29/ploymorphic/index.html">
+<meta property="og:site_name" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
+<meta property="og:description" content="基本要点 1.java引用变量有两种类型，一个是编译时类型，一个是运行时类型。编译时类型由申明该变量使用的类型决定，运行时类型由实际赋值给变量的对象决定。如果编译时类型和运行时类型不一致，就可能出现所谓的多态。2.第三个引用变量ploymorphicBc比较特殊，它编译时类型是BaseClass，而运行时类型是SubClass，当调用该引用变量的test()方法时，实际执行的是SubClass类中">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-30T01:42:28.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java疯狂讲义１">
+<meta name="twitter:description" content="基本要点 1.java引用变量有两种类型，一个是编译时类型，一个是运行时类型。编译时类型由申明该变量使用的类型决定，运行时类型由实际赋值给变量的对象决定。如果编译时类型和运行时类型不一致，就可能出现所谓的多态。2.第三个引用变量ploymorphicBc比较特殊，它编译时类型是BaseClass，而运行时类型是SubClass，当调用该引用变量的test()方法时，实际执行的是SubClass类中">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lemon-zqq.github.io/2018/10/29/ploymorphic/"/>
+
+
+
+
+
+  <title>java疯狂讲义１ | 最美的不是下雨天，是曾和你一起躲过雨的屋檐</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">最美的不是下雨天，是曾和你一起躲过雨的屋檐</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lemon-zqq.github.io/2018/10/29/ploymorphic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="曾庆琦">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最美的不是下雨天，是曾和你一起躲过雨的屋檐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java疯狂讲义１</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-29T19:43:03-06:00">
+                2018-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong><em>基本要点</em></strong></p>
+<font color="red"><br><em>1.java引用变量有两种类型，一个是编译时类型，一个是运行时类型。编译时类型由申明该变量使用的类型决定，运行时类型由实际赋值给变量的对象决定。如果编译时类型和运行时类型不一致，就可能出现所谓的多态。<br>2.第三个引用变量ploymorphicBc比较特殊，它编译时类型是BaseClass，而运行时类型是SubClass，当调用该引用变量的test()方法时，实际执行的是SubClass类中覆盖后的test()方法.d当运行时调用该引用方法时，其方法行为总是表现出其子类方法行为特征，而不是父类的行为特征。这就是相同类型的变量，调用同一方法时呈现出多种不同的行为特征,这就是多态.<br>3.子类是一种特殊的父类，因此java允许把一个子类对象直接赋值给一个父类引用变量,无须任何的类型转换，或者被称为<strong>向上转型</strong>,向上转型由系统自动完成.<br>4.与方法不同的是，对象的实例变量不具有多态性，比如下面的ploymorphicBc引用变量，程序输出book实例变量时，并不是输出SubClass类中定义的实例变量，而是输出BaseClass类的实例变量.
+</em><br><br></font>
+
+<p>####程序代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">package com.ucas.zqq;</span><br><span class="line"></span><br><span class="line">public class BaseClass &#123;</span><br><span class="line">    public int book = 6;</span><br><span class="line">    public void base()&#123;</span><br><span class="line">        System.out.println(&quot;父类的不同方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void test()&#123;</span><br><span class="line">        System.out.println(&quot;父类被覆盖的方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">package com.ucas.zqq;</span><br><span class="line"></span><br><span class="line">public class SubClass extends BaseClass&#123;</span><br><span class="line">    //重新定义book实例变量</span><br><span class="line">    public String book = &quot;曾庆琦&quot;;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void test() &#123;</span><br><span class="line">        System.out.println(&quot;子类覆盖父类的方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void sub()&#123;</span><br><span class="line">        System.out.println(&quot;子类的普通方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        //编译时类型和运行时类型完全一样，不存在多态</span><br><span class="line">        BaseClass bc = new BaseClass();</span><br><span class="line">        System.out.println(bc.book);</span><br><span class="line">        bc.base();</span><br><span class="line">        bc.test();</span><br><span class="line">        System.out.println(&quot;-----------------&quot;);</span><br><span class="line"></span><br><span class="line">        SubClass sc = new SubClass();</span><br><span class="line">        System.out.println(sc.book);</span><br><span class="line">        //执行父类继承到的base方法</span><br><span class="line">        sc.base();</span><br><span class="line">        sc.test();</span><br><span class="line">        sc.sub();</span><br><span class="line">        System.out.println(&quot;-----------------&quot;);</span><br><span class="line"></span><br><span class="line">        //编译时类型和运行时类型不一样</span><br><span class="line">        BaseClass ploymorphicBc = new SubClass();</span><br><span class="line">        //与方法不一样，变量不具有多态性</span><br><span class="line">        System.out.println(ploymorphicBc.book);</span><br><span class="line">        //调用父类的base方法</span><br><span class="line">        ploymorphicBc.base();</span><br><span class="line">        //调用子类的test方法</span><br><span class="line">        ploymorphicBc.test();</span><br><span class="line">        //因为ploymorphicBc编译时类型是BaseClass</span><br><span class="line">        //BaseClass类没有提供sub()方法，所以编译代码出错</span><br><span class="line">        //ploymorphicBc.sub();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####运行结果<br>6<br>父类的不同方法</p>
+<h2 id="父类被覆盖的方法"><a href="#父类被覆盖的方法" class="headerlink" title="父类被覆盖的方法"></a>父类被覆盖的方法</h2><p>曾庆琦<br>父类的不同方法<br>子类覆盖父类的方法</p>
+<h2 id="子类的普通方法"><a href="#子类的普通方法" class="headerlink" title="子类的普通方法"></a>子类的普通方法</h2><p>6<br>父类的不同方法<br>子类覆盖父类的方法</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/29/Wordcount/" rel="next" title="Wordcount">
+                <i class="fa fa-chevron-left"></i> Wordcount
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">曾庆琦</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#父类被覆盖的方法"><span class="nav-number">1.</span> <span class="nav-text">父类被覆盖的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子类的普通方法"><span class="nav-number">2.</span> <span class="nav-text">子类的普通方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">曾庆琦</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
